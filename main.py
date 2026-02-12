@@ -13,3 +13,15 @@ def get_profile(user=Depends(firebase_auth)):
 
     return doc.to_dict()
 
+# to create a profile.
+@app.post("/profile")
+def create_profile(data: dict, user=Depends(firebase_auth)):
+    uid=user["uid"]
+
+    db.collection("users").document(uid).set({
+        **data,
+        "email": user.get("email"),
+        "active": True
+    })
+
+    return {"status":"profile Created"}
