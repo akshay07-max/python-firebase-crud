@@ -28,3 +28,6 @@ def login_user(email:str, password:str):
     })
 
     return access_token
+
+def logout_user():
+    return {"message": "Logged out"}
