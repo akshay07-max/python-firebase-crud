@@ -8,7 +8,7 @@ from users.crud import get_profile
 app = FastAPI()
 
 @app.post("/register")
-def register(data: str)
+def register(data: str):
     uid = register_user(
         data["email"],
         data["password"],
@@ -20,3 +20,11 @@ def register(data: str)
 def login(data: dict):
     token = login_user(data["email"], data["password"])
     return {"access_token": token}
+
+@app.post("/logout")
+def logout():
+    return logout_user()
+
+@app.post("/profile")
+def profile(user=Depends(get_current_user)):
+    return get_profile(user["uid"])
